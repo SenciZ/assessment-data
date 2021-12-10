@@ -246,5 +246,17 @@ module.exports = {
         VALUES('${name}', ${rating}, ${countryId});`)
         .then(dbRes => res.status(200).send(dbRes[0]))
         .catch(err => console.log(err))
+    },
+
+    getCities: (req, res)=>{
+        console.log(req.body)
+        sequelize.query(`
+        SELECT c.country_id, c.name city, c.rating, co.country_id, co.name country
+        FROM cities c
+        JOIN countries co ON co.country_id = c.country_id
+        ;`)
+        .then(dbRes => {res.status(200).send(dbRes[0]) 
+            console.log(dbRes[0])})
+        .catch(err => console.log(err))
     }
 }
